@@ -79,3 +79,4 @@ helm delete java
 kubectl get events 
 ## Screenshots)
 ![NLB png](https://github.com/Rahul-ukey/Idc-tech/assets/124550581/287a245e-8bfc-4d3a-9535-ee28d3fe5741)
+![Screenshot (51)](https://github.com/Rahul-ukey/Idc-tech/assets/124550581/a86a6a61-c3eb-4c15-a22d-c2bba0e49195)
