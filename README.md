@@ -1,5 +1,63 @@
-#Step #1:Create Amazon EKS cluster using eksctl:
+# Step #1:Create Amazon EKS cluster using eksctl:
+#install eksctl 
 
+####  for ARM systems, set ARCH to: `arm64`, `armv6` or `armv7`
+ARCH=amd64
+PLATFORM=$(uname -s)_$ARCH
+
+curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
+
+####  (Optional) Verify checksum
+curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
+
+tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
+
+sudo mv /tmp/eksctl /usr/local/bin
+
+
+#### install awscli 
+
+sudo apt install unzip 
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+#### install docker
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+
+####  Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+####  Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+#Configure AWS CLI
+#### aws configure
+#### access key
+#### secrete key 
+#### region 
+# Step #2:Create Java application and push to github repo 
+ 
+sudo usermod -aG docker $USER
+sudo chmod 666 /var/run/docker.sock 
+sudo docker bulid -t santa .
+docker images docker run -d -p 8080:8080 --name santa 24a19d8b6e76
+
+docker tag 24a19d8b6e76 rahulukey123/santa:latest
+docker images
+docker push rahulukey123/santa:latest
+
+# step 3# Update Amazon EKS cluster using aws eks 
 aws eks update-kubeconfig --region us-west-2 --name pc-eks 
 
 cluster_name=pc-eks 
@@ -35,6 +93,8 @@ eksctl create iamserviceaccount \
 
 sudo apt install openssl -y
 
+# Step #4:Install Helm on EKS cluster
+
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
 chmod 700 get_helm.sh
 ./get_helm.sh
@@ -53,7 +113,6 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 
 kubectl get deployment -n kube-system aws-load-balancer-controller
 
-kubectl create namespace nlb-sample-app
 
 git clone https://github.com/Rahul-ukey/santa
 
@@ -61,13 +120,21 @@ git clone https://github.com/Rahul-ukey/santa
 
 kubectl events deployment -n kube-system aws-load-balancer-controller
 
+# Step #5:Create node-app helm chart and modify helm chart files
 
 helm create java-chart
+Charts folder
+Template folder
+Chart.yaml
+Values.yaml
+deployment.yaml
+service.yaml
 
 helm install java-chart eks-charts/java-chart -f eks-charts/java-chart/values.yaml
 
 helm install java ./java-chart
 
+# Step #14:Check pods, deployment and service on EKS
 kubectl get svc 
 kubectl get deployment 
 kubectl get events -n kube-system
