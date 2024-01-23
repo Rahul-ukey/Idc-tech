@@ -134,7 +134,7 @@ helm install java-chart eks-charts/java-chart -f eks-charts/java-chart/values.ya
 
 helm install java ./java-chart
 
-# Step #14:Check pods, deployment and service on EKS
+# Step #6:Check pods, deployment and service on EKS
 kubectl get svc 
 kubectl get deployment 
 kubectl get events -n kube-system
@@ -145,6 +145,9 @@ helm list
 helm delete java
 
 kubectl get events 
+
+# Outputs  for Load balancer network type 
 ## Screenshots)
 ![NLB png](https://github.com/Rahul-ukey/Idc-tech/assets/124550581/287a245e-8bfc-4d3a-9535-ee28d3fe5741)
+
 ![Screenshot (51)](https://github.com/Rahul-ukey/Idc-tech/assets/124550581/a86a6a61-c3eb-4c15-a22d-c2bba0e49195)
