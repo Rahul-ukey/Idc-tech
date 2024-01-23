@@ -136,8 +136,11 @@ helm install java ./java-chart
 
 # Step #6:Check pods, deployment and service on EKS
 kubectl get svc 
+
 kubectl get deployment 
+
 kubectl get events -n kube-system
+
 cd java-chart
 
 helm list
