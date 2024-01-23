@@ -1,4 +1,5 @@
-Step #1:Create Amazon EKS cluster using eksctl:
+#Step #1:Create Amazon EKS cluster using eksctl:
+
 aws eks update-kubeconfig --region us-west-2 --name pc-eks 
 
 cluster_name=pc-eks 
