@@ -50,12 +50,17 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 # Step #2:Create Java application and push to github repo 
  
 sudo usermod -aG docker $USER
+
 sudo chmod 666 /var/run/docker.sock 
+
 sudo docker bulid -t santa .
+
 docker images docker run -d -p 8080:8080 --name santa 24a19d8b6e76
 
 docker tag 24a19d8b6e76 rahulukey123/santa:latest
+
 docker images
+
 docker push rahulukey123/santa:latest
 
 # step 3# Update Amazon EKS cluster using aws eks 
