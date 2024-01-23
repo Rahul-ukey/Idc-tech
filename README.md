@@ -1,5 +1,6 @@
-# Step #1:Create Amazon EKS cluster using eksctl:
-#install eksctl 
+# Step #1:Create Amazon EKS cluster using terraform :
+
+#### install eksctl 
 
 ####  for ARM systems, set ARCH to: `arm64`, `armv6` or `armv7`
 ARCH=amd64
