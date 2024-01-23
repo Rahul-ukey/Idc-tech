@@ -126,7 +126,7 @@ git clone https://github.com/Rahul-ukey/santa
 
 kubectl events deployment -n kube-system aws-load-balancer-controller
 
-# Step #5:Create node-app helm chart and modify helm chart files
+# Step #5:Create java-app helm chart and modify helm chart files
 
 helm create java-chart
 Charts folder
